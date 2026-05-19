@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { commandList } from "./commads/common";
+import { commandList } from "./commands/common";
 import { ClipboardManager } from "./manager";
 import { leftPad } from "./util";
 
