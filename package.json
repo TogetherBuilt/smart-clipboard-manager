@@ -12,13 +12,13 @@
         "vscode": "^1.65.0"
     },
     "bugs": {
-        "url": "https://github.com/TogetherBuilt/edgardmessias.vscode.clipboard-manager/issues"
+        "url": "https://github.com/TogetherBuilt/smart-clipboard-manager/issues"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/TogetherBuilt/edgardmessias.vscode.clipboard-manager.git"
+        "url": "https://github.com/TogetherBuilt/smart-clipboard-manager.git"
     },
-    "homepage": "https://github.com/TogetherBuilt/edgardmessias.vscode.clipboard-manager",
+    "homepage": "https://github.com/TogetherBuilt/smart-clipboard-manager",
     "categories": [
         "Other"
     ],
