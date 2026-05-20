@@ -1,6 +1,6 @@
 import * as path from "path";
 import * as vscode from "vscode";
-import { commandList } from "../commads/common";
+import { commandList } from "../commands/common";
 import { ClipboardManager, IClipboardItem } from "../manager";
 import { leftPad } from "../util";
 
