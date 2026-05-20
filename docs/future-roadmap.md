@@ -127,6 +127,25 @@ The corresponding `saveClips()` and `loadClips()` methods call `getStoreFile()` 
 | **Local SQLite** | `saveTo: "sqlite"` | Use the `better-sqlite3` package; subclass `ClipboardManager` with `SqliteClipboardManager` overriding `saveClips`, `loadClips`, and `getStoreFile` |
 | **Cloud sync** | `saveTo: "cloud"` | Define a `IStorageProvider` interface with `save(clips)` / `load()` / `clear()` methods; provide an HTTP-based implementation; authenticate via VS Code's `SecretStorage` API |
 
+### `IStorageProvider` Interface
+
+All future storage backends should implement the following interface (to be defined in `src/storageProvider.ts`):
+
+```typescript
+import { IClipboardItem } from "./manager";
+
+export interface IStorageProvider {
+  /** Persist the full clip list to the backend. */
+  save(clips: IClipboardItem[]): Promise<void>;
+  /** Retrieve the full clip list from the backend. */
+  load(): Promise<IClipboardItem[]>;
+  /** Remove all persisted clips from the backend. */
+  clear(): Promise<void>;
+}
+```
+
+`ClipboardManager`'s `saveClips()` / `loadClips()` / `clearAll()` methods can then delegate to an injected `IStorageProvider`, making it straightforward to swap backends (JSON file, SQLite, cloud) without modifying the core manager logic.
+
 ### Privacy Mode Details
 
 - New config key: `smart-clipboard.privacyMode` (`boolean`, default `false`).
