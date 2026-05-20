@@ -19,6 +19,7 @@ To pick a copied item, only run `Ctrl+Shift+V`
 1. Clear all history
 1. Open copy location
 1. Double click in history view to paste
+1. Pin/favourite clips to protect them from auto-removal
 
 ## Extension Settings
 
@@ -70,3 +71,13 @@ Copy to history:
 
 Pick and Paste:
 ![Smart Clipboard - Pick and Paste](screenshots/pick-and-paste.gif)
+
+## Pinned / Favourite Clips
+
+You can pin important clipboard entries so they are protected from automatic removal when the history reaches its maximum size (`smart-clipboard.maxClips`).
+
+- **Pin a clip**: Right-click a history item and select **Pin Clip**.
+- **Unpin a clip**: Right-click a pinned item and select **Unpin Clip**.
+- Pinned clips are shown at the top of the Clipboard History view, prefixed with a 📌 pin icon (`$(pin)`).
+- Pinned clips are never removed by the automatic history trimming logic — only unpinned clips are subject to the `maxClips` limit.
+- The pinned state is persisted in `clipboard.history.json` and survives editor restarts.

@@ -8,7 +8,9 @@ export class ClipHistoryItem extends vscode.TreeItem {
   constructor(readonly clip: IClipboardItem) {
     super(clip.value);
 
-    this.contextValue = "clipHistoryItem:";
+    this.contextValue = clip.pinned
+      ? "clipHistoryItem:pinned:"
+      : "clipHistoryItem:";
     this.label = this.clip.value.replace(/\s+/g, " ").trim();
     this.tooltip = this.clip.value;
 
@@ -62,13 +64,19 @@ export class ClipboardTreeDataProvider
   ): vscode.ProviderResult<ClipHistoryItem[]> {
     const clips = this._manager.clips;
 
-    const maxLength = `${clips.length}`.length;
+    // Pinned clips appear at the top, followed by unpinned clips
+    const pinnedClips = clips.filter(c => c.pinned);
+    const unpinnedClips = clips.filter(c => !c.pinned);
+    const orderedClips = [...pinnedClips, ...unpinnedClips];
 
-    const childs = clips.map((c, index) => {
+    const maxLength = `${orderedClips.length}`.length;
+
+    const childs = orderedClips.map((c, index) => {
       const item = new ClipHistoryItem(c);
       const indexNumber = leftPad(index + 1, maxLength, "0");
+      const pinnedPrefix = c.pinned ? "$(pin) " : "";
 
-      item.label = `${indexNumber}) ${item.label}`;
+      item.label = `${pinnedPrefix}${indexNumber}) ${item.label}`;
 
       return item;
     });

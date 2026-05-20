@@ -84,6 +84,16 @@
                     "dark": "resources/dark/remove.svg",
                     "light": "resources/light/remove.svg"
                 }
+            },
+            {
+                "command": "smart-clipboard.history.pin",
+                "title": "Pin Clip",
+                "category": "Smart Clipboard"
+            },
+            {
+                "command": "smart-clipboard.history.unpin",
+                "title": "Unpin Clip",
+                "category": "Smart Clipboard"
             }
         ],
         "menus": {
@@ -102,6 +112,14 @@
                 {
                     "command": "smart-clipboard.history.remove",
                     "when": "false"
+                },
+                {
+                    "command": "smart-clipboard.history.pin",
+                    "when": "false"
+                },
+                {
+                    "command": "smart-clipboard.history.unpin",
+                    "when": "false"
                 }
             ],
             "view/item/context": [
@@ -113,6 +131,16 @@
                 {
                     "command": "smart-clipboard.history.remove",
                     "when": "viewItem =~ /^clipHistoryItem:/",
+                    "group": "1_modification"
+                },
+                {
+                    "command": "smart-clipboard.history.pin",
+                    "when": "viewItem =~ /^clipHistoryItem:/ && !(viewItem =~ /^clipHistoryItem:pinned:/)",
+                    "group": "1_modification"
+                },
+                {
+                    "command": "smart-clipboard.history.unpin",
+                    "when": "viewItem =~ /^clipHistoryItem:pinned:/",
                     "group": "1_modification"
                 },
                 {
