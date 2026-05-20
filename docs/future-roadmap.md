@@ -127,6 +127,45 @@ The corresponding `saveClips()` and `loadClips()` methods call `getStoreFile()` 
 | **Local SQLite** | `saveTo: "sqlite"` | Use the `better-sqlite3` package; subclass `ClipboardManager` with `SqliteClipboardManager` overriding `saveClips`, `loadClips`, and `getStoreFile` |
 | **Cloud sync** | `saveTo: "cloud"` | Define a `IStorageProvider` interface with `save(clips)` / `load()` / `clear()` methods; provide an HTTP-based implementation; authenticate via VS Code's `SecretStorage` API |
 
+### `IStorageProvider` Interface
+
+All non-file-system backends should implement the following interface, which `ClipboardManager` will delegate `saveClips`/`loadClips`/`clearAll` to when an active provider is configured:
+
+```typescript
+import { IClipboardItem } from "./manager";
+
+export interface IStorageProvider {
+  /** Persist the full clipboard history. */
+  save(clips: IClipboardItem[]): Promise<void>;
+  /** Restore the clipboard history from the backend. */
+  load(): Promise<IClipboardItem[]>;
+  /** Wipe all persisted data from the backend. */
+  clear(): Promise<void>;
+}
+```
+
+Example skeleton for a concrete implementation:
+
+```typescript
+import { IClipboardItem } from "./manager";
+import { IStorageProvider } from "./storageProvider";
+
+export class CloudStorageProvider implements IStorageProvider {
+  async save(clips: IClipboardItem[]): Promise<void> {
+    // POST clips to remote API
+  }
+
+  async load(): Promise<IClipboardItem[]> {
+    // GET clips from remote API
+    return [];
+  }
+
+  async clear(): Promise<void> {
+    // DELETE all clips on remote API
+  }
+}
+```
+
 ### Privacy Mode Details
 
 - New config key: `smart-clipboard.privacyMode` (`boolean`, default `false`).
