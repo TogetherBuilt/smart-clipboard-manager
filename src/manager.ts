@@ -50,14 +50,14 @@ export class ClipboardManager implements vscode.Disposable {
     );
 
     vscode.workspace.onDidChangeConfiguration(
-      e => e.affectsConfiguration("clipboard-manager") && this.saveClips()
+      e => e.affectsConfiguration("smart-clipboard") && this.saveClips()
     );
   }
 
   protected updateClipList(change: IClipboardTextChange) {
     this.checkClipsUpdate();
 
-    const config = vscode.workspace.getConfiguration("clipboard-manager");
+    const config = vscode.workspace.getConfiguration("smart-clipboard");
     const maxClips = config.get("maxClips", 100);
     const avoidDuplicates = config.get("avoidDuplicates", true);
 
@@ -97,7 +97,7 @@ export class ClipboardManager implements vscode.Disposable {
   public async setClipboardValue(value: string) {
     this.checkClipsUpdate();
 
-    const config = vscode.workspace.getConfiguration("clipboard-manager");
+    const config = vscode.workspace.getConfiguration("smart-clipboard");
     const moveToTop = config.get("moveToTop", true);
 
     const index = this._clips.findIndex(c => c.value === value);
@@ -153,7 +153,7 @@ export class ClipboardManager implements vscode.Disposable {
 
     const filePath = path.join(folder, "clipboard.history.json");
 
-    const config = vscode.workspace.getConfiguration("clipboard-manager");
+    const config = vscode.workspace.getConfiguration("smart-clipboard");
     const saveTo = config.get<string | null | boolean>("saveTo");
 
     if (typeof saveTo === "string") {

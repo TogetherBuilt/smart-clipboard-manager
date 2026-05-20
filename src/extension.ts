@@ -95,7 +95,7 @@ export async function activate(context: vscode.ExtensionContext) {
   );
 
   const updateConfig = () => {
-    const config = vscode.workspace.getConfiguration("clipboard-manager");
+    const config = vscode.workspace.getConfiguration("smart-clipboard");
     monitor.checkInterval = config.get("checkInterval", 500);
     monitor.onlyWindowFocused = config.get("onlyWindowFocused", true);
     monitor.maxClipboardSize = config.get("maxClipboardSize", 1000000);
@@ -104,7 +104,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   disposable.push(
     vscode.workspace.onDidChangeConfiguration(
-      e => e.affectsConfiguration("clipboard-manager") && updateConfig()
+      e => e.affectsConfiguration("smart-clipboard") && updateConfig()
     )
   );
 

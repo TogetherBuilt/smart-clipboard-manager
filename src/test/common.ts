@@ -33,7 +33,7 @@ export async function activateExtension() {
 export async function showSidebar() {
   try {
     await vscode.commands.executeCommand(
-      "workbench.view.extension.clipboard-manager"
+      "workbench.view.extension.smart-clipboard"
     );
     // tslint:disable-next-line:no-empty
   } catch (error) {}
