@@ -186,6 +186,7 @@ No tests currently cover `ClipboardManager` directly (pin/unpin, max-clip trimmi
 | Feature area | Target milestone |
 |---|---|
 | Paste transformations (camelCase, JSON string) | v0.2.0 |
+| PickAndPasteCommand transformation tests | v0.2.0 |
 | WebView rich preview | v0.2.0 |
 | Privacy mode (`saveTo: false` with status bar indicator) | v0.2.0 |
 | `ClipboardManager` integration tests | v0.2.0 |
