@@ -127,6 +127,38 @@ The corresponding `saveClips()` and `loadClips()` methods call `getStoreFile()` 
 | **Local SQLite** | `saveTo: "sqlite"` | Use the `better-sqlite3` package; subclass `ClipboardManager` with `SqliteClipboardManager` overriding `saveClips`, `loadClips`, and `getStoreFile` |
 | **Cloud sync** | `saveTo: "cloud"` | Define a `IStorageProvider` interface with `save(clips)` / `load()` / `clear()` methods; provide an HTTP-based implementation; authenticate via VS Code's `SecretStorage` API |
 
+### Cloud Sync: Security and Privacy Requirements
+
+Cloud sync transmits and stores users' clipboard history — which may contain passwords, API keys, personal data, or other sensitive content — outside the local machine. Any cloud sync implementation **must** address the following concerns before shipping.
+
+#### User Consent
+
+- Cloud sync must be **explicitly opt-in**. It must never be enabled by default.
+- The first time a user sets `saveTo: "cloud"`, the extension must present a clear consent prompt that explains what data will be transmitted, where it will be stored, and how it will be protected.
+- Users must be able to revoke consent and delete their remote data at any time from within the extension.
+
+#### Authentication
+
+- Use VS Code's [`SecretStorage` API](https://code.visualstudio.com/api/references/vscode-api#SecretStorage) to store all credentials and tokens. Never write secrets to settings, workspace state, or log output.
+- Prefer OAuth 2.0 / PKCE flows over username/password authentication to avoid handling raw credentials.
+- Implement token refresh and revocation so that compromised credentials can be invalidated without requiring the user to reconfigure the extension.
+
+#### Encryption
+
+| Concern | Requirement |
+|---|---|
+| **In transit** | All HTTP requests to the sync backend must use HTTPS (TLS 1.2+). Reject connections that present invalid or self-signed certificates. |
+| **At rest** | The sync backend must encrypt stored data at rest (e.g., AES-256). Document the encryption scheme in user-facing documentation so users can make an informed trust decision. |
+| **Local cache** | Any local cache of remote clips should be stored in VS Code's `globalStorageUri` directory (not a world-readable path) and should not contain plaintext credentials. |
+
+#### Risks and Best Practices
+
+- **Sensitive clipboard content**: Clipboard history frequently contains credentials, tokens, and private data. Consider allowing users to mark individual clips as "do not sync" (similar to the per-clip privacy tagging described below) and to configure a maximum sync age so stale sensitive entries are automatically excluded.
+- **Credential leakage**: Avoid logging request headers, response bodies, or authentication tokens at any log level. Use VS Code's `OutputChannel` carefully.
+- **Data minimisation**: Only transmit the clip fields required for sync (`value`, `createdAt`, `copyCount`, `useCount`, `language`). Do not transmit `createdLocation` (which contains local file URIs) unless the user explicitly enables it.
+- **Sync conflicts**: Define a clear last-write-wins or merge strategy to prevent data loss when the same account is used on multiple machines simultaneously.
+- **Third-party backend trust**: If the default backend is a hosted service, publish a privacy policy and provide instructions for self-hosting so privacy-conscious users can run their own server.
+
 ### Privacy Mode Details
 
 - New config key: `smart-clipboard.privacyMode` (`boolean`, default `false`).
@@ -192,4 +224,4 @@ No tests currently cover `ClipboardManager` directly (pin/unpin, max-clip trimmi
 | GitHub Actions CI workflow | v0.2.0 |
 | Local SQLite storage provider | v0.3.0 |
 | Additional transformations (Markdown table, Base64) | v0.3.0 |
-| Cloud sync storage provider | v1.0.0 |
+| Cloud sync storage provider (with consent, auth, and encryption — see security requirements above) | v1.0.0 |
