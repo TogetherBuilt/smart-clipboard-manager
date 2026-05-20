@@ -1,9 +1,9 @@
 {
-    "publisher": "EdgardMessias",
-    "name": "clipboard-manager",
-    "displayName": "Clipboard Manager",
-    "description": "Clipboard Manager",
-    "version": "1.5.0",
+    "publisher": "TogetherBuilt",
+    "name": "smart-clipboard",
+    "displayName": "Smart Clipboard",
+    "description": "A personal clipboard history manager for VS Code with pinned clips and smart features",
+    "version": "0.1.0",
     "icon": "media/clipboard.png",
     "extensionKind": [
         "ui"
@@ -12,13 +12,13 @@
         "vscode": "^1.65.0"
     },
     "bugs": {
-        "url": "https://github.com/edgardmessias/vscode.clipboard-manager/issues"
+        "url": "https://github.com/TogetherBuilt/edgardmessias.vscode.clipboard-manager/issues"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/edgardmessias/vscode.clipboard-manager.git"
+        "url": "https://github.com/TogetherBuilt/edgardmessias.vscode.clipboard-manager.git"
     },
-    "homepage": "https://github.com/edgardmessias/vscode.clipboard-manager",
+    "homepage": "https://github.com/TogetherBuilt/edgardmessias.vscode.clipboard-manager",
     "categories": [
         "Other"
     ],
@@ -37,14 +37,14 @@
         "viewsContainers": {
             "activitybar": [
                 {
-                    "id": "clipboard-manager",
-                    "title": "Clipboard Manager",
+                    "id": "smart-clipboard",
+                    "title": "Smart Clipboard",
                     "icon": "media/clipboard.svg"
                 }
             ]
         },
         "views": {
-            "clipboard-manager": [
+            "smart-clipboard": [
                 {
                     "id": "clipboardHistory",
                     "name": "Clipboard History"
@@ -53,33 +53,33 @@
         },
         "commands": [
             {
-                "command": "clipboard-manager.editor.copyToHistory",
+                "command": "smart-clipboard.editor.copyToHistory",
                 "title": "Copy to Clipboard History",
-                "category": "Clipboard Manager"
+                "category": "Smart Clipboard"
             },
             {
-                "command": "clipboard-manager.editor.pickAndPaste",
+                "command": "smart-clipboard.editor.pickAndPaste",
                 "title": "Pick and Paste",
-                "category": "Clipboard Manager"
+                "category": "Smart Clipboard"
             },
             {
-                "command": "clipboard-manager.editor.showClipboardInFile",
+                "command": "smart-clipboard.editor.showClipboardInFile",
                 "title": "Show in the file",
-                "category": "Clipboard Manager"
+                "category": "Smart Clipboard"
             },
             {
-                "command": "clipboard-manager.history.clear",
+                "command": "smart-clipboard.history.clear",
                 "title": "Clear History",
-                "category": "Clipboard Manager",
+                "category": "Smart Clipboard",
                 "icon": {
                     "dark": "resources/dark/clear-history.svg",
                     "light": "resources/light/clear-history.svg"
                 }
             },
             {
-                "command": "clipboard-manager.history.remove",
+                "command": "smart-clipboard.history.remove",
                 "title": "Remove",
-                "category": "Clipboard Manager",
+                "category": "Smart Clipboard",
                 "icon": {
                     "dark": "resources/dark/remove.svg",
                     "light": "resources/light/remove.svg"
@@ -89,41 +89,41 @@
         "menus": {
             "commandPalette": [
                 {
-                    "command": "clipboard-manager.editor.pickAndPaste",
+                    "command": "smart-clipboard.editor.pickAndPaste",
                     "when": "editorFocus && !editorReadonly"
                 },
                 {
-                    "command": "clipboard-manager.editor.showClipboardInFile",
+                    "command": "smart-clipboard.editor.showClipboardInFile",
                     "when": "false"
                 },
                 {
-                    "command": "clipboard-manager.history.clear"
+                    "command": "smart-clipboard.history.clear"
                 },
                 {
-                    "command": "clipboard-manager.history.remove",
+                    "command": "smart-clipboard.history.remove",
                     "when": "false"
                 }
             ],
             "view/item/context": [
                 {
-                    "command": "clipboard-manager.editor.showClipboardInFile",
+                    "command": "smart-clipboard.editor.showClipboardInFile",
                     "when": "viewItem =~ /^clipHistoryItem:file/",
                     "group": "0_navigation"
                 },
                 {
-                    "command": "clipboard-manager.history.remove",
+                    "command": "smart-clipboard.history.remove",
                     "when": "viewItem =~ /^clipHistoryItem:/",
                     "group": "1_modification"
                 },
                 {
-                    "command": "clipboard-manager.history.remove",
+                    "command": "smart-clipboard.history.remove",
                     "when": "viewItem =~ /^clipHistoryItem:/",
                     "group": "inline"
                 }
             ],
             "view/title": [
                 {
-                    "command": "clipboard-manager.history.clear",
+                    "command": "smart-clipboard.history.clear",
                     "when": "view == clipboardHistory",
                     "group": "navigation"
                 }
@@ -131,13 +131,13 @@
         },
         "keybindings": [
             {
-                "command": "clipboard-manager.editor.copyToHistory",
+                "command": "smart-clipboard.editor.copyToHistory",
                 "key": "Ctrl+Shift+C",
                 "mac": "Cmd+Shift+C",
                 "when": "textInputFocus && !editorReadonly"
             },
             {
-                "command": "clipboard-manager.editor.pickAndPaste",
+                "command": "smart-clipboard.editor.pickAndPaste",
                 "key": "Ctrl+Shift+V",
                 "mac": "Cmd+Shift+V",
                 "when": "textInputFocus && !editorReadonly"
@@ -145,44 +145,44 @@
         ],
         "configuration": [
             {
-                "title": "Clipboard Manager",
+                "title": "Smart Clipboard",
                 "properties": {
-                    "clipboard-manager.avoidDuplicates": {
+                    "smart-clipboard.avoidDuplicates": {
                         "type": "boolean",
                         "default": true,
                         "description": "Avoid duplicate clips in the list"
                     },
-                    "clipboard-manager.checkInterval": {
+                    "smart-clipboard.checkInterval": {
                         "type": "integer",
                         "default": 500,
                         "description": "Time in milliseconds to check changes in clipboard. Set zero to disable."
                     },
-                    "clipboard-manager.maxClipboardSize": {
+                    "smart-clipboard.maxClipboardSize": {
                         "type": "integer",
                         "default": 1000000,
                         "description": "Maximum clipboard size in bytes."
                     },
-                    "clipboard-manager.maxClips": {
+                    "smart-clipboard.maxClips": {
                         "type": "integer",
                         "default": 100,
                         "description": "Maximum number of clips to save in clipboard"
                     },
-                    "clipboard-manager.moveToTop": {
+                    "smart-clipboard.moveToTop": {
                         "type": "boolean",
                         "default": true,
                         "description": "Move used clip to top in the list"
                     },
-                    "clipboard-manager.onlyWindowFocused": {
+                    "smart-clipboard.onlyWindowFocused": {
                         "type": "boolean",
                         "default": true,
                         "description": "Get clips only from VSCode"
                     },
-                    "clipboard-manager.preview": {
+                    "smart-clipboard.preview": {
                         "type": "boolean",
                         "default": true,
                         "description": "View a preview while you are choosing the clip"
                     },
-                    "clipboard-manager.saveTo": {
+                    "smart-clipboard.saveTo": {
                         "type": [
                             "string",
                             "null",
@@ -192,19 +192,19 @@
                         "description": "Set location to save the clipboard file, set false to disable",
                         "scope": "application"
                     },
-                    "clipboard-manager.snippet.enabled": {
+                    "smart-clipboard.snippet.enabled": {
                         "scope": "resource",
                         "type": "boolean",
                         "default": true,
                         "description": "Enable completion snippets"
                     },
-                    "clipboard-manager.snippet.max": {
+                    "smart-clipboard.snippet.max": {
                         "scope": "resource",
                         "type": "integer",
                         "default": 10,
                         "description": "Maximum number of clips to suggests in snippets (Zero for all)"
                     },
-                    "clipboard-manager.snippet.prefix": {
+                    "smart-clipboard.snippet.prefix": {
                         "scope": "resource",
                         "type": "string",
                         "default": "clip",
