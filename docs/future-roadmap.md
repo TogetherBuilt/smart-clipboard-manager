@@ -74,10 +74,16 @@ The `ClipboardTreeDataProvider` in `src/tree/history.ts` drives the **Clipboard 
 1. **Add a `previewClipboard` command** (`smart-clipboard.history.preview`) registered in `src/commands/common.ts`.
 2. **Create `src/commands/previewClipboard.ts`** — a command handler that opens a `vscode.WebviewPanel` and renders the clip content.
 3. The WebView HTML should:
-   - Use [highlight.js](https://highlightjs.org/) (already bundled as a CDN script, no new npm dependency needed) to syntax-highlight `value` using `clip.language` as the language hint.
+   - Use [highlight.js](https://highlightjs.org/) to syntax-highlight `value` using `clip.language` as the language hint.
    - Display a metadata table: **Created**, **Copied**, **Pasted**, **Source file** (if `createdLocation` is set).
    - Include a **Paste** button that posts a message back to the extension host to trigger `setClipboardValue` + paste.
 4. Wire the command to the `ClipHistoryItem` context menu by adding an entry in `package.json` under `"contributes.menus"` → `"view/item/context"` with `"when": "viewItem =~ /^clipHistoryItem:/"`.
+
+> **⚠️ VS Code WebView CSP restriction:** VS Code enforces a strict [Content Security Policy (CSP)](https://code.visualstudio.com/api/extension-guides/webview#content-security-policy) for WebViews that blocks scripts loaded from external CDNs. **highlight.js must not be referenced via a CDN URL** (e.g. `https://cdnjs.cloudflare.com/...`). Instead, it must be bundled locally with the extension using one of the following approaches:
+> - **Vendor the built file** — copy `node_modules/highlight.js/build/highlight.min.js` (and an appropriate CSS theme) into the `media/` directory as part of a build step, then reference it via `webview.asWebviewUri(...)`.
+> - **Add as a devDependency** — run `npm install --save-dev highlight.js` and use a bundler (e.g. esbuild or webpack) to include it in the extension's output bundle.
+>
+> Either way, the WebView's `<meta http-equiv="Content-Security-Policy">` tag must list `'nonce-...'` for inline scripts and restrict `script-src` to `${webview.cspSource}` only — no `https:` or `'unsafe-inline'` sources. See the [VS Code WebView API docs](https://code.visualstudio.com/api/extension-guides/webview#content-security-policy) for details.
 
 ### Example WebView Content Structure
 
