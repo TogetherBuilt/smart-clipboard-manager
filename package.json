@@ -232,6 +232,11 @@
                         "default": 10,
                         "description": "Maximum number of clips to suggests in snippets (Zero for all)"
                     },
+                    "smart-clipboard.showStatusBarItem": {
+                        "type": "boolean",
+                        "default": true,
+                        "description": "Show the Smart Clipboard status bar item with clip count and quick access to Pick and Paste"
+                    },
                     "smart-clipboard.snippet.prefix": {
                         "scope": "resource",
                         "type": "string",

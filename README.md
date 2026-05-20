@@ -11,15 +11,16 @@ To pick a copied item, only run `Ctrl+Shift+V`
 ## Features
 
 1. Save history of all copied and cut items
-1. Can check copied items outside the VSCode (`"smart-clipboard.onlyWindowFocused": false`)
-1. Paste from history (`Ctrl+Shift+V` => Pick and Paste)
-1. Preview the paste
-1. Snippets to paste (Ex. `clip01, clip02, ...`)
-1. Remove selected item from history
-1. Clear all history
-1. Open copy location
-1. Double click in history view to paste
-1. Pin/favourite clips to protect them from auto-removal
+2. Can check copied items outside the VSCode (`"smart-clipboard.onlyWindowFocused": false`)
+3. Paste from history (`Ctrl+Shift+V` => Pick and Paste)
+4. Preview the paste
+5. Snippets to paste (Ex. `clip01, clip02, ...`)
+6. Remove selected item from history
+7. Clear all history
+8. Open copy location
+9. Double click in history view to paste
+10. Pin/favourite clips to protect them from auto-removal
+11. Status bar item showing clip count — click to open the Pick and Paste picker
 
 ## Extension Settings
 
@@ -51,6 +52,9 @@ This extension contributes the following settings (default values):
 
   // Set location to save the clipboard file, set false to disable
   "smart-clipboard.saveTo": null,
+
+  // Show the Smart Clipboard status bar item with clip count and quick access to Pick and Paste
+  "smart-clipboard.showStatusBarItem": true,
 
   // Enable completion snippets
   "smart-clipboard.snippet.enabled": true,

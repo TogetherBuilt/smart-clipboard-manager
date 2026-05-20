@@ -95,11 +95,36 @@ export async function activate(context: vscode.ExtensionContext) {
     )
   );
 
+  const statusBarItem = vscode.window.createStatusBarItem(
+    vscode.StatusBarAlignment.Right,
+    100
+  );
+  statusBarItem.command = "smart-clipboard.editor.pickAndPaste";
+  statusBarItem.tooltip =
+    "Smart Clipboard: Click to pick and paste from history";
+  disposable.push(statusBarItem);
+
+  const updateStatusBar = () => {
+    const count = manager.clips.length;
+    statusBarItem.text = `$(clippy) ${count}`;
+  };
+
+  disposable.push(manager.onDidChangeClipList(updateStatusBar));
+
   const updateConfig = () => {
     const config = vscode.workspace.getConfiguration("smart-clipboard");
     monitor.checkInterval = config.get("checkInterval", 500);
     monitor.onlyWindowFocused = config.get("onlyWindowFocused", true);
     monitor.maxClipboardSize = config.get("maxClipboardSize", 1000000);
+
+    updateStatusBar();
+
+    const showStatusBarItem = config.get("showStatusBarItem", true);
+    if (showStatusBarItem) {
+      statusBarItem.show();
+    } else {
+      statusBarItem.hide();
+    }
   };
   updateConfig();
 
