@@ -1,10 +1,10 @@
-"use strict";
 import * as vscode from "vscode";
 import { defaultClipboard } from "./clipboard";
 import { ApiGetMonitor } from "./commands/apiGetMonitor";
 import { ClearClipboardHistory } from "./commands/clearClipboardHistory";
 import { HistoryTreeDoubleClickCommand } from "./commands/historyTreeDoubleClick";
 import { PickAndPasteCommand } from "./commands/pickAndPaste";
+import { PinClipboardHistory } from "./commands/pinClipboardHistory";
 import { RemoveClipboardHistory } from "./commands/removeClipboardHistory";
 import { SetClipboardValueCommand } from "./commands/setClipboardValue";
 import { ShowClipboardInFile } from "./commands/showClipboardInFile";
@@ -57,6 +57,7 @@ export async function activate(context: vscode.ExtensionContext) {
   disposable.push(new HistoryTreeDoubleClickCommand(manager));
   disposable.push(new SetClipboardValueCommand(manager));
   disposable.push(new RemoveClipboardHistory(manager));
+  disposable.push(new PinClipboardHistory(manager));
   disposable.push(new ShowClipboardInFile(manager));
   disposable.push(new ClearClipboardHistory(manager));
   disposable.push(new CopyToHistoryCommand(monitor));

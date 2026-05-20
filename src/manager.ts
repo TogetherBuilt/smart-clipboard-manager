@@ -12,6 +12,7 @@ export interface IClipboardItem {
   useCount: number;
   language?: string;
   createdLocation?: vscode.Location;
+  pinned?: boolean;
 }
 
 export class ClipboardManager implements vscode.Disposable {
@@ -84,9 +85,11 @@ export class ClipboardManager implements vscode.Disposable {
     // Add to top
     this._clips.unshift(item);
 
-    // Max clips to store
+    // Max clips to store — pinned clips are always kept
     if (maxClips > 0) {
-      this._clips = this._clips.slice(0, maxClips);
+      const pinnedClips = this._clips.filter(c => c.pinned);
+      const unpinnedClips = this._clips.filter(c => !c.pinned);
+      this._clips = [...pinnedClips, ...unpinnedClips.slice(0, maxClips)];
     }
 
     this._onDidClipListChange.fire();
@@ -126,6 +129,21 @@ export class ClipboardManager implements vscode.Disposable {
     this.saveClips();
 
     return prevLength !== this._clips.length;
+  }
+
+  public togglePinClip(value: string) {
+    this.checkClipsUpdate();
+
+    const index = this._clips.findIndex(c => c.value === value);
+
+    if (index >= 0) {
+      this._clips[index].pinned = this._clips[index].pinned ? undefined : true;
+      this._onDidClipListChange.fire();
+      this.saveClips();
+      return true;
+    }
+
+    return false;
   }
 
   public clearAll() {
@@ -193,7 +211,7 @@ export class ClipboardManager implements vscode.Disposable {
     try {
       json = JSON.stringify(
         {
-          version: 2,
+          version: 3,
           clips: this._clips,
         },
         this.jsonReplacer,
@@ -294,6 +312,11 @@ export class ClipboardManager implements vscode.Disposable {
       stored.version = 2;
     }
 
+    // Version 2 -> 3: pinned field added (defaults to undefined/false for existing clips)
+    if (stored.version === 2) {
+      stored.version = 3;
+    }
+
     this._clips = clips.map(c => {
       const clip: IClipboardItem = {
         value: c.value,
@@ -301,6 +324,7 @@ export class ClipboardManager implements vscode.Disposable {
         copyCount: c.copyCount,
         useCount: c.copyCount,
         language: c.language,
+        pinned: c.pinned ? true : undefined,
       };
 
       if (c.createdLocation) {

@@ -11,15 +11,16 @@ To pick a copied item, only run `Ctrl+Shift+V`
 ## Features
 
 1. Save history of all copied and cut items
-1. Can check copied items outside the VSCode (`"smart-clipboard.onlyWindowFocused": false`)
-1. Paste from history (`Ctrl+Shift+V` => Pick and Paste)
-1. Preview the paste
-1. Snippets to paste (Ex. `clip01, clip02, ...`)
-1. Remove selected item from history
-1. Clear all history
-1. Open copy location
-1. Double click in history view to paste
-1. Status bar item showing clip count — click to open the Pick and Paste picker
+2. Can check copied items outside the VSCode (`"smart-clipboard.onlyWindowFocused": false`)
+3. Paste from history (`Ctrl+Shift+V` => Pick and Paste)
+4. Preview the paste
+5. Snippets to paste (Ex. `clip01, clip02, ...`)
+6. Remove selected item from history
+7. Clear all history
+8. Open copy location
+9. Double click in history view to paste
+10. Pin/favourite clips to protect them from auto-removal
+11. Status bar item showing clip count — click to open the Pick and Paste picker
 
 ## Extension Settings
 
@@ -74,3 +75,13 @@ Copy to history:
 
 Pick and Paste:
 ![Smart Clipboard - Pick and Paste](screenshots/pick-and-paste.gif)
+
+## Pinned / Favourite Clips
+
+You can pin important clipboard entries so they are protected from automatic removal when the history reaches its maximum size (`smart-clipboard.maxClips`).
+
+- **Pin a clip**: Right-click a history item and select **Pin Clip**.
+- **Unpin a clip**: Right-click a pinned item and select **Unpin Clip**.
+- Pinned clips are shown at the top of the Clipboard History view, prefixed with a pin icon (`$(pin)` VS Code codicon).
+- Pinned clips are never removed by the automatic history trimming logic — only unpinned clips are subject to the `maxClips` limit.
+- The pinned state is persisted in `clipboard.history.json` and survives editor restarts.
