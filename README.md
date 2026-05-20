@@ -19,6 +19,7 @@ To pick a copied item, only run `Ctrl+Shift+V`
 1. Clear all history
 1. Open copy location
 1. Double click in history view to paste
+1. Status bar item showing clip count — click to open the Pick and Paste picker
 
 ## Extension Settings
 
@@ -50,6 +51,9 @@ This extension contributes the following settings (default values):
 
   // Set location to save the clipboard file, set false to disable
   "smart-clipboard.saveTo": null,
+
+  // Show the Smart Clipboard status bar item with clip count and quick access to Pick and Paste
+  "smart-clipboard.showStatusBarItem": true,
 
   // Enable completion snippets
   "smart-clipboard.snippet.enabled": true,
