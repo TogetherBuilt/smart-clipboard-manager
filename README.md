@@ -78,6 +78,6 @@ You can pin important clipboard entries so they are protected from automatic rem
 
 - **Pin a clip**: Right-click a history item and select **Pin Clip**.
 - **Unpin a clip**: Right-click a pinned item and select **Unpin Clip**.
-- Pinned clips are shown at the top of the Clipboard History view, prefixed with a 📌 pin icon (`$(pin)`).
+- Pinned clips are shown at the top of the Clipboard History view, prefixed with a pin icon (`$(pin)` VS Code codicon).
 - Pinned clips are never removed by the automatic history trimming logic — only unpinned clips are subject to the `maxClips` limit.
 - The pinned state is persisted in `clipboard.history.json` and survives editor restarts.
