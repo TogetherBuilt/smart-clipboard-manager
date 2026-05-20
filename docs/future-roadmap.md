@@ -189,6 +189,7 @@ No tests currently cover `ClipboardManager` directly (pin/unpin, max-clip trimmi
 | WebView rich preview | v0.2.0 |
 | Privacy mode (`saveTo: false` with status bar indicator) | v0.2.0 |
 | `ClipboardManager` integration tests | v0.2.0 |
+| `PickAndPasteCommand` transformation tests | v0.2.0 |
 | GitHub Actions CI workflow | v0.2.0 |
 | Local SQLite storage provider | v0.3.0 |
 | Additional transformations (Markdown table, Base64) | v0.3.0 |
